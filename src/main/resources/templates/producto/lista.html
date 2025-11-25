@@ -1,0 +1,61 @@
+<!--D:\Conf. de Software\cocobolo\src\main\resources\templates\producto\lista.html-->
+<div th:replace="~{_layout :: layout(~{::content})}" xmlns:th="http://www.thymeleaf.org">
+  <div th:fragment="content">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="text-xl md:text-2xl font-semibold">Productos</h2>
+        <p class="text-sm text-slate-500">Gestiona los sets de cuna disponibles</p>
+      </div>
+      <a th:href="@{/productos/nuevo}"
+         class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold
+                bg-cocoPrimary text-white hover:opacity-90 transition shadow">
+        + Nuevo
+      </a>
+    </div>
+
+    <div class="overflow-x-auto rounded-xl ring-1 ring-white/60 bg-white/60">
+      <table class="min-w-full divide-y divide-slate-200">
+        <thead class="bg-cocoLav/60">
+          <tr class="text-left text-xs font-semibold text-slate-600 uppercase">
+            <th class="px-4 py-3">ID</th>
+            <th class="px-4 py-3">Nombre</th>
+            <th class="px-4 py-3">Precio</th>
+            <th class="px-4 py-3">Stock</th>
+            <th class="px-4 py-3">Activo</th>
+            <th class="px-4 py-3">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          <tr th:each="p : ${productos}" class="hover:bg-cocoMint/30">
+            <td class="px-4 py-3 text-sm" th:text="${p.id}"></td>
+            <td class="px-4 py-3 text-sm font-medium" th:text="${p.nombre}"></td>
+            <td class="px-4 py-3 text-sm" th:text="${#numbers.formatDecimal(p.precioUnitario,1,'POINT',2,'POINT')}"></td>
+            <td class="px-4 py-3 text-sm" th:text="${p.stock}"></td>
+            <td class="px-4 py-3">
+              <span th:text="${p.activo} ? 'Sí' : 'No'"
+                    th:classappend="${p.activo} ? 'bg-green-100 text-green-700' : 'bg-pink-100 text-pink-700'"
+                    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold"></span>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center gap-2">
+                <a th:href="@{'/productos/' + ${p.id} + '/editar'}"
+                   class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white ring-1 ring-slate-200 hover:bg-slate-50">
+                  Editar
+                </a>
+                <form th:action="@{'/productos/' + ${p.id} + '/toggle'}" method="post">
+                  <button type="submit"
+                          class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white ring-1 ring-slate-200 hover:bg-slate-50">
+                    Alternar
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          <tr th:if="${#lists.isEmpty(productos)}">
+            <td colspan="6" class="px-4 py-6 text-center text-sm text-slate-500">No hay productos aún.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

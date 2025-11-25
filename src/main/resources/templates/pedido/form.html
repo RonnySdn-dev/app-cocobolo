@@ -1,0 +1,45 @@
+<!--D:\Conf. de Software\cocobolo\src\main\resources\templates\pedido\form.html-->
+<div th:replace="~{_layout :: layout(~{::content})}" xmlns:th="http://www.thymeleaf.org">
+  <div th:fragment="content">
+    <div class="mb-6">
+      <h2 class="text-xl md:text-2xl font-semibold">Nuevo Pedido</h2>
+      <p class="text-sm text-slate-500">Registra un pedido rápido de un set de cuna</p>
+    </div>
+
+    <form th:action="@{/pedidos}" method="post" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div class="bg-white/70 rounded-xl p-4 ring-1 ring-white/60">
+        <label class="block text-sm font-medium mb-1">Cliente</label>
+        <select name="clienteId" required
+                class="w-full px-3 py-2 rounded-lg ring-1 ring-slate-200 focus:ring-cocoPrimary outline-none bg-white">
+          <option th:each="c : ${clientes}" th:value="${c.id}" th:text="${c.nombreCompleto}"></option>
+        </select>
+      </div>
+
+      <div class="bg-white/70 rounded-xl p-4 ring-1 ring-white/60">
+        <label class="block text-sm font-medium mb-1">Producto</label>
+        <select name="productoId" required
+                class="w-full px-3 py-2 rounded-lg ring-1 ring-slate-200 focus:ring-cocoPrimary outline-none bg-white">
+          <option th:each="p : ${productos}" th:value="${p.id}"
+                  th:text="${p.nombre + ' - S/ ' + #numbers.formatDecimal(p.precioUnitario,1,'POINT',2,'POINT')}"></option>
+        </select>
+      </div>
+
+      <div class="bg-white/70 rounded-xl p-4 ring-1 ring-white/60">
+        <label class="block text-sm font-medium mb-1">Cantidad</label>
+        <input type="number" name="cantidad" min="1" value="1" required
+               class="w-full px-3 py-2 rounded-lg ring-1 ring-slate-200 focus:ring-cocoPrimary outline-none"/>
+      </div>
+
+      <div class="md:col-span-3 flex items-center gap-3">
+        <button type="submit"
+                class="px-5 py-2.5 rounded-xl bg-cocoAccent text-white font-semibold shadow hover:opacity-90">
+          Crear
+        </button>
+        <a th:href="@{/pedidos}"
+           class="px-5 py-2.5 rounded-xl bg-white ring-1 ring-slate-200 font-semibold hover:bg-slate-50">
+          Volver
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
