@@ -1,0 +1,47 @@
+<div th:replace="~{_layout :: layout(~{::content})}" xmlns:th="http://www.thymeleaf.org">
+  <div th:fragment="content">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="text-xl md:text-2xl font-semibold">Agenda de Diseño</h2>
+        <p class="text-sm text-slate-500">Citas para personalización de cunas</p>
+      </div>
+      <a th:href="@{/citas/nueva}" 
+         class="px-4 py-2 rounded-xl bg-cocoPrimary text-white shadow hover:opacity-90 font-medium">
+         + Nueva Cita
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div th:each="c : ${citas}" class="bg-white/70 p-5 rounded-xl ring-1 ring-white/60 shadow-sm relative">
+        <div class="flex justify-between items-start mb-2">
+            <span class="text-xs font-bold px-2 py-1 rounded-full"
+                  th:classappend="${c.estado == 'PENDIENTE' ? 'bg-yellow-100 text-yellow-700' : (c.estado == 'ATENDIDA' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700')}"
+                  th:text="${c.estado}"></span>
+            <span class="text-xs text-slate-400" th:text="${#temporals.format(c.fechaHora, 'dd/MM/yyyy HH:mm')}"></span>
+        </div>
+        <h3 class="font-bold text-lg text-cocoText" th:text="${c.nombreCliente}"></h3>
+        <p class="text-sm text-slate-500 mb-2">📞 <span th:text="${c.telefono}"></span></p>
+        <p class="text-sm bg-cocoSky/50 p-2 rounded-lg mb-4">
+            <span class="font-semibold">Interés:</span> <span th:text="${c.preferenciaDiseno}"></span>
+        </p>
+        
+        <div class="flex gap-2 mt-auto" th:if="${c.estado == 'PENDIENTE'}">
+            <form th:action="@{'/citas/' + ${c.id} + '/atender'}" method="post" class="flex-1">
+                <button class="w-full py-1.5 text-xs font-bold bg-cocoMint text-green-700 rounded-lg hover:bg-green-200">
+                    ✓ Atender
+                </button>
+            </form>
+            <form th:action="@{'/citas/' + ${c.id} + '/cancelar'}" method="post" class="flex-1">
+                <button class="w-full py-1.5 text-xs font-bold bg-pink-100 text-pink-700 rounded-lg hover:bg-pink-200">
+                    ✕ Cancelar
+                </button>
+            </form>
+        </div>
+      </div>
+    </div>
+    
+    <div th:if="${#lists.isEmpty(citas)}" class="text-center py-10 text-slate-500">
+        No hay citas programadas. ¡Agenda una nueva!
+    </div>
+  </div>
+</div>
