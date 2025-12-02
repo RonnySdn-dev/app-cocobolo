@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cocobolo | Home</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">🥥 Cocobolo</a>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h1 class="display-4 text-primary">¡Bienvenido a Cocobolo!</h1>
+                <p class="lead text-muted">Tu sistema de gestión conectado a MySQL.</p>
+                <hr class="my-4">
+                <p>El sistema está funcionando correctamente bajo arquitectura SOLID.</p>
+                
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <button class="btn btn-primary btn-lg px-4 gap-3">Ver Clientes</button>
+                    <button class="btn btn-outline-secondary btn-lg px-4">Ver Pedidos</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
