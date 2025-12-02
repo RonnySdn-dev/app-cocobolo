@@ -1,6 +1,8 @@
 package com.t2.cocobolo.nosotros;
 
+import org.springframework.beans.factory.annotation.Autowired; // <--- Importante
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -8,15 +10,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class HistoriaController {
 
-    private final HistoriaService servicio = new HistoriaService();
+    @Autowired
+    private HistoriaService servicio;
 
-    // 1. Mostrar la pagina HTML
     @GetMapping("/historia")
-    public String verHistoria() {
-        return "historia"; // Busca el archivo historia.html
+    public String verHistoria(Model model) {
+        model.addAttribute("listaHitos", servicio.obtenerHistoria());
+        return "historia";
     }
 
-    // 2. Recibir datos del formulario y guardar
     @PostMapping("/guardarHito")
     public String guardar(@RequestParam int anio, 
                           @RequestParam String titulo, 
@@ -29,7 +31,6 @@ public class HistoriaController {
         
         servicio.registrarHito(nuevo);
         
-        return "redirect:/historia"; // Recarga la pagina
+        return "redirect:/historia";
     }
-} 
-// <--- ¡ASEGÚRATE DE QUE ESTA LLAVE ESTÉ AQUÍ!
+}

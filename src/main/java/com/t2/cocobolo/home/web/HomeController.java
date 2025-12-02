@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-@GetMapping("/")
-    public String bienvenido() {
-        // Antes era "home", ahora debe ser "home/home"
-        // El primer "home" es la carpeta, el segundo es el archivo.
-        return "home/home"; 
+
+    // Este es el "mapa" que le falta a tu aplicación
+    @GetMapping({"/", "/home"})
+    public String index() {
+        return "home/home"; // Abre el archivo home.html que está en templates/home
     }
 }
